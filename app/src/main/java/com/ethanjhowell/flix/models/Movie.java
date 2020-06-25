@@ -29,11 +29,11 @@ public class Movie {
     }
 
     public String getPosterPath() {
-        return String.format("https://image.tmdb.org/t/p/w342/%s", posterPath);
+        return String.format("https://image.tmdb.org/t/p/w342%s", posterPath);
     }
 
     public String getBackdropPath() {
-        return String.format("https://image.tmdb.org/t/p/w342/%s", backdropPath);
+        return String.format("https://image.tmdb.org/t/p/w342%s", backdropPath);
     }
 
     public String getTitle() {
