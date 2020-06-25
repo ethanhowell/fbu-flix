@@ -1,4 +1,4 @@
-package com.ethanjhowell.flix;
+package com.ethanjhowell.flix.activities;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
+import com.ethanjhowell.flix.R;
 import com.ethanjhowell.flix.adapters.MovieAdapter;
 import com.ethanjhowell.flix.models.Movie;
 

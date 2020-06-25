@@ -2,7 +2,7 @@
 
 **Flix** shows the latest movies currently playing in theaters. The app utilizes the Movie Database API to display images and basic information about these movies to the user.
 
-Time spent: **7.5** hours spent in total
+Time spent: **8** hours spent in total
 
 ## User Stories
 
@@ -13,7 +13,7 @@ The following **required** functionality is completed:
 * [X] For each movie displayed, user can see the following details:
   * [X] Title, Poster Image, Overview (Portrait mode)
   * [X] Title, Backdrop Image, Overview (Landscape mode)
-* [ ] Allow user to view details of the movie including ratings and popularity within a separate activity
+* [X] Allow user to view details of the movie including ratings and popularity within a separate activity
 
 The following **stretch** features are implemented:
 
@@ -30,7 +30,8 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-<img src='screencap.gif' title='Video Walkthrough' width='400' alt='Video Walkthrough' />
+
+<img src='screencap.gif' title='Video Walkthrough' width='300' alt='Video Walkthrough' />
 
 
 ## Notes

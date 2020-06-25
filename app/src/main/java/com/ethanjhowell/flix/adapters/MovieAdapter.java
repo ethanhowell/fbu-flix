@@ -1,6 +1,7 @@
 package com.ethanjhowell.flix.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,7 +15,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.ethanjhowell.flix.R;
+import com.ethanjhowell.flix.activities.MovieDetailsActivity;
 import com.ethanjhowell.flix.models.Movie;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -45,7 +49,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         return movies.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView tvTitle;
         ImageView ivPoster;
@@ -54,10 +58,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
+            itemView.setOnClickListener(this);
             tvTitle = itemView.findViewById(R.id.tvTitle);
             ivPoster = itemView.findViewById(R.id.ivPoster);
             tvOverview = itemView.findViewById(R.id.tvOverview);
-
         }
 
         public void bind(Movie movie) {
@@ -75,6 +79,18 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
             }
 
             Glide.with(context).load(imageurl).placeholder(placeholder).into(ivPoster);
+        }
+
+        @Override
+        public void onClick(View view) {
+            // gets position of clicked on movie
+            int pos = getAdapterPosition();
+            if (pos != RecyclerView.NO_POSITION) {
+                Movie movie = movies.get(pos);
+                Intent intent = new Intent(context, MovieDetailsActivity.class);
+                intent.putExtra(movie.getClass().getSimpleName(), Parcels.wrap(movie));
+                context.startActivity(intent);
+            }
         }
     }
 }
