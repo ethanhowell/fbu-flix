@@ -3,15 +3,21 @@ package com.ethanjhowell.flix.models;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcel;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Parcel
 public class Movie {
-    private String posterPath;
-    private String backdropPath;
-    private String title;
-    private String overview;
+    String posterPath;
+    String backdropPath;
+    String title;
+    String overview;
+
+    // required for Parceler
+    public Movie() {
+    }
 
     private Movie(JSONObject jsonObject) throws JSONException {
         posterPath = jsonObject.getString("poster_path");
