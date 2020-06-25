@@ -30,6 +30,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
         // unwrap the movie from the parcel
         movie = Parcels.unwrap(getIntent().getParcelableExtra(Movie.class.getSimpleName()));
+        assert movie != null;
         Log.d(TAG, String.format("Showing details for \"%s\"", movie.getTitle()));
 
         tvTitle = binding.tvTitle;
