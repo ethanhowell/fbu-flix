@@ -2,7 +2,7 @@
 
 **Flix** shows the latest movies currently playing in theaters. The app utilizes the Movie Database API to display images and basic information about these movies to the user.
 
-Time spent: **6** hours spent in total
+Time spent: **7** hours spent in total
 
 ## User Stories
 
@@ -12,7 +12,7 @@ The following **required** functionality is completed:
 * [ ] Display a nice default [placeholder graphic](https://guides.codepath.org/android/Displaying-Images-with-the-Glide-Library#advanced-usage) for each image during loading
 * [ ] For each movie displayed, user can see the following details:
   * [X] Title, Poster Image, Overview (Portrait mode)
-  * [ ] Title, Backdrop Image, Overview (Landscape mode)
+  * [X] Title, Backdrop Image, Overview (Landscape mode)
 * [ ] Allow user to view details of the movie including ratings and popularity within a separate activity
 
 The following **stretch** features are implemented:
