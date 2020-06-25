@@ -17,6 +17,7 @@ public class Movie {
 
     // required for Parceler
     public Movie() {
+        // purposeful empty body
     }
 
     private Movie(JSONObject jsonObject) throws JSONException {

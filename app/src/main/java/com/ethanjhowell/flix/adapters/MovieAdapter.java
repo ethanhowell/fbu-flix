@@ -88,7 +88,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
             if (pos != RecyclerView.NO_POSITION) {
                 Movie movie = movies.get(pos);
                 Intent intent = new Intent(context, MovieDetailsActivity.class);
-                intent.putExtra(Movie.class.getSimpleName(), Parcels.wrap(movie));
+                intent.putExtra(movie.getClass().getSimpleName(), Parcels.wrap(movie));
                 context.startActivity(intent);
             }
         }
