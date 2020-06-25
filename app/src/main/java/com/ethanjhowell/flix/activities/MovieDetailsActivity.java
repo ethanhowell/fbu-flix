@@ -3,11 +3,13 @@ package com.ethanjhowell.flix.activities;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.ethanjhowell.flix.R;
+import com.ethanjhowell.flix.databinding.ActivityMovieDetailsBinding;
 import com.ethanjhowell.flix.models.Movie;
 
 import org.parceler.Parcels;
@@ -23,7 +25,9 @@ public class MovieDetailsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_movie_details);
+        ActivityMovieDetailsBinding inflate = ActivityMovieDetailsBinding.inflate(getLayoutInflater());
+        RelativeLayout root = inflate.getRoot();
+        setContentView(root);
 
         // unwrap the movie from the parcel
         movie = Parcels.unwrap(getIntent().getParcelableExtra(Movie.class.getSimpleName()));
