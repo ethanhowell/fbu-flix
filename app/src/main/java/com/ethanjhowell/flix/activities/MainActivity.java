@@ -2,6 +2,7 @@ package com.ethanjhowell.flix.activities;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.RelativeLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -9,8 +10,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
-import com.ethanjhowell.flix.R;
 import com.ethanjhowell.flix.adapters.MovieAdapter;
+import com.ethanjhowell.flix.databinding.ActivityMainBinding;
 import com.ethanjhowell.flix.models.Movie;
 
 import org.json.JSONArray;
@@ -32,11 +33,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
+        RelativeLayout root = binding.getRoot();
+        setContentView(root);
 
         movies = new ArrayList<>();
 
-        RecyclerView rvMovies = findViewById(R.id.rvMovies);
+        RecyclerView rvMovies = binding.rvMovies;
         final MovieAdapter movieAdapter = new MovieAdapter(this, movies);
         rvMovies.setAdapter(movieAdapter);
         rvMovies.setLayoutManager(new LinearLayoutManager(this));

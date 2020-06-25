@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.ethanjhowell.flix.R;
 import com.ethanjhowell.flix.activities.MovieDetailsActivity;
+import com.ethanjhowell.flix.databinding.ItemMovieBinding;
 import com.ethanjhowell.flix.models.Movie;
 
 import org.parceler.Parcels;
@@ -27,6 +28,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     private final static String TAG = MovieAdapter.class.getCanonicalName();
     Context context;
     List<Movie> movies;
+    ItemMovieBinding binding;
 
     public MovieAdapter(Context context, List<Movie> movies) {
         this.context = context;
@@ -36,7 +38,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_movie, parent, false);
+        binding = ItemMovieBinding.inflate(LayoutInflater.from(context), parent, false);
+        View view = binding.getRoot();
         return new ViewHolder(view);
     }
 
@@ -58,11 +61,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-
             itemView.setOnClickListener(this);
-            tvTitle = itemView.findViewById(R.id.tvTitle);
-            ivPoster = itemView.findViewById(R.id.ivPoster);
-            tvOverview = itemView.findViewById(R.id.tvOverview);
+            tvTitle = binding.tvTitle;
+            ivPoster = binding.ivPoster;
+            tvOverview = binding.tvOverview;
         }
 
         public void bind(Movie movie) {
