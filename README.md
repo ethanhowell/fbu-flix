@@ -30,7 +30,8 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-<video controls width="300" autoplay loop muted><source src="screencap.webm" type="video/webm"></video>
+
+<img src='screencap.gif' title='Video Walkthrough' width='300' alt='Video Walkthrough' />
 
 
 ## Notes
