@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.ethanjhowell.flix.R;
 import com.ethanjhowell.flix.activities.MovieDetailsActivity;
+import com.ethanjhowell.flix.activities.MovieTrailerActivity;
 import com.ethanjhowell.flix.databinding.ItemMovieBinding;
 import com.ethanjhowell.flix.models.Movie;
 
@@ -76,6 +77,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
                 imageurl = movie.getBackdropPath();
                 placeholder = R.drawable.flicks_backdrop_placeholder;
                 Log.d(TAG, "bind: landscape");
+                ivPoster.setOnClickListener((View v) -> {
+                    context.startActivity(new Intent(context, MovieTrailerActivity.class));
+                });
             } else {
                 imageurl = movie.getPosterPath();
                 placeholder = R.drawable.flicks_movie_placeholder;
