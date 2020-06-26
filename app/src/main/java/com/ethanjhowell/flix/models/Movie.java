@@ -1,5 +1,12 @@
 package com.ethanjhowell.flix.models;
 
+import android.content.Context;
+import android.util.Log;
+import android.widget.Toast;
+
+import com.codepath.asynchttpclient.AsyncHttpClient;
+import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -8,26 +15,76 @@ import org.parceler.Parcel;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.Headers;
+
 @Parcel
 public class Movie {
+    private static final String TAG = Movie.class.getCanonicalName();
+
     String posterPath;
     String backdropPath;
     String title;
     String overview;
-    double voteAverage;
-
-    // required for Parceler
-    public Movie() {
-        // purposeful empty body
-    }
+    String videoID;
+    int id;
 
     private Movie(JSONObject jsonObject) throws JSONException {
         posterPath = jsonObject.getString("poster_path");
         backdropPath = jsonObject.getString("backdrop_path");
         title = jsonObject.getString("title");
         overview = jsonObject.getString("overview");
+        id = jsonObject.getInt("id");
         // vote average range is from 0 to 10
         voteAverage = jsonObject.getDouble("vote_average") / 10;
+    }
+
+    double voteAverage;
+
+    public String getMovieEndpointURL() {
+        return String.format("https://api.themoviedb.org/3/movie/%d/videos?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed", id);
+    }
+
+    public String getVideoID() {
+        return videoID;
+    }
+
+    public void setVideoID(Context context, Runnable callback) {
+        if (videoID == null) {
+            AsyncHttpClient client = new AsyncHttpClient();
+            client.get(this.getMovieEndpointURL(), new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Headers headers, JSON json) {
+                    JSONObject jsonObject = json.jsonObject;
+                    try {
+                        JSONArray results = jsonObject.getJSONArray("results");
+                        Log.i(TAG, "onSuccess: Results " + results.toString());
+                        JSONObject firstVideo = results.getJSONObject(0);
+                        videoID = firstVideo.getString("key");
+                        callback.run();
+                    } catch (JSONException e) {
+                        onFailure(0, null, null, e);
+                    }
+                }
+
+                @Override
+                public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                    Log.e(TAG, "onSuccess: Failure getting results from response", throwable);
+                    Toast.makeText(context, "Unable to load the video", Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            Log.d(TAG, "setVideoID: Already have videoID stored");
+            callback.run();
+        }
+    }
+
+    // required for Parceler
+    public Movie() {
+        // purposeful empty body
+    }
+
+    public interface StringRunnable {
+        void run(String s);
     }
 
     public double getVoteAverage() {
