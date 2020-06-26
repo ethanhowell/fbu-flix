@@ -18,9 +18,11 @@ import org.parceler.Parcels;
 
 public class MovieTrailerActivity extends YouTubeBaseActivity {
     public static void start(Context context, Movie movie) {
-        Intent intent = new Intent(context, MovieTrailerActivity.class);
-        intent.putExtra(Movie.class.getSimpleName(), Parcels.wrap(movie));
-        context.startActivity(intent);
+        movie.setVideoID(context, () -> {
+            Intent intent = new Intent(context, MovieTrailerActivity.class);
+            intent.putExtra(Movie.class.getSimpleName(), Parcels.wrap(movie));
+            context.startActivity(intent);
+        });
     }
 
     @Override
@@ -33,23 +35,21 @@ public class MovieTrailerActivity extends YouTubeBaseActivity {
         // resolve the player view from the layout
         YouTubePlayerView playerView = binding.player;
 
-        movie.getVideoID(this, (String videoID) -> {
-            playerView.initialize(getString(R.string.youtube_api_key), new YouTubePlayer.OnInitializedListener() {
-                @Override
-                public void onInitializationSuccess(YouTubePlayer.Provider provider,
-                                                    YouTubePlayer youTubePlayer, boolean b) {
-                    // loads and plays the video
-                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
-                    youTubePlayer.loadVideo(videoID);
-                }
+        playerView.initialize(getString(R.string.youtube_api_key), new YouTubePlayer.OnInitializedListener() {
+            @Override
+            public void onInitializationSuccess(YouTubePlayer.Provider provider,
+                                                YouTubePlayer youTubePlayer, boolean b) {
+                // loads and plays the video
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+                youTubePlayer.loadVideo(movie.getVideoID());
+            }
 
-                @Override
-                public void onInitializationFailure(YouTubePlayer.Provider provider,
-                                                    YouTubeInitializationResult youTubeInitializationResult) {
-                    // log the error
-                    Log.e("MovieTrailerActivity", "Error initializing YouTube player");
-                }
-            });
+            @Override
+            public void onInitializationFailure(YouTubePlayer.Provider provider,
+                                                YouTubeInitializationResult youTubeInitializationResult) {
+                // log the error
+                Log.e("MovieTrailerActivity", "Error initializing YouTube player");
+            }
         });
     }
 }

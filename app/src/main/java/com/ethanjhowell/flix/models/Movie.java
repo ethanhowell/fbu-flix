@@ -44,7 +44,11 @@ public class Movie {
         return String.format("https://api.themoviedb.org/3/movie/%d/videos?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed", id);
     }
 
-    public void getVideoID(Context context, StringRunnable callback) {
+    public String getVideoID() {
+        return videoID;
+    }
+
+    public void setVideoID(Context context, Runnable callback) {
         if (videoID == null) {
             AsyncHttpClient client = new AsyncHttpClient();
             client.get(this.getMovieEndpointURL(), new JsonHttpResponseHandler() {
@@ -56,7 +60,7 @@ public class Movie {
                         Log.i(TAG, "onSuccess: Results " + results.toString());
                         JSONObject firstVideo = results.getJSONObject(0);
                         videoID = firstVideo.getString("key");
-                        callback.run(videoID);
+                        callback.run();
                     } catch (JSONException e) {
                         onFailure(0, null, null, e);
                     }
@@ -68,8 +72,10 @@ public class Movie {
                     Toast.makeText(context, "Unable to load the video", Toast.LENGTH_SHORT).show();
                 }
             });
-        } else
-            callback.run(videoID);
+        } else {
+            Log.d(TAG, "setVideoID: Already have videoID stored");
+            callback.run();
+        }
     }
 
     // required for Parceler
