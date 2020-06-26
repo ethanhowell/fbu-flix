@@ -78,7 +78,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
                 placeholder = R.drawable.flicks_backdrop_placeholder;
                 Log.d(TAG, "bind: landscape");
                 ivPoster.setOnClickListener((View v) -> {
-                    context.startActivity(new Intent(context, MovieTrailerActivity.class));
+                    MovieTrailerActivity.start(context, movie);
                 });
             } else {
                 imageurl = movie.getPosterPath();

@@ -1,6 +1,5 @@
 package com.ethanjhowell.flix.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -43,7 +42,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         rbVoteAverage = binding.rbVoteAverage;
 
         binding.ivPoster.setOnClickListener((View view) -> {
-            startActivity(new Intent(this, MovieTrailerActivity.class));
+            MovieTrailerActivity.start(this, movie);
         });
 
         Glide.with(this)

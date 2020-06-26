@@ -1,25 +1,34 @@
 package com.ethanjhowell.flix.activities;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
 
 import com.ethanjhowell.flix.R;
 import com.ethanjhowell.flix.databinding.ActivityMovieTrailerBinding;
+import com.ethanjhowell.flix.models.Movie;
 import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
 
+import org.parceler.Parcels;
+
 public class MovieTrailerActivity extends YouTubeBaseActivity {
+    public static void start(Context context, Movie movie) {
+        Intent intent = new Intent(context, MovieTrailerActivity.class);
+        intent.putExtra(Movie.class.getSimpleName(), Parcels.wrap(movie));
+        context.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActivityMovieTrailerBinding binding = ActivityMovieTrailerBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
-        // temporary test video id -- TODO replace with movie trailer video id
-        final String videoId = "tKodtNFpzBA";
+        Movie movie = Parcels.unwrap(getIntent().getParcelableExtra(Movie.class.getSimpleName()));
 
         // resolve the player view from the layout
         YouTubePlayerView playerView = binding.player;
@@ -29,8 +38,9 @@ public class MovieTrailerActivity extends YouTubeBaseActivity {
             @Override
             public void onInitializationSuccess(YouTubePlayer.Provider provider,
                                                 YouTubePlayer youTubePlayer, boolean b) {
-                // do any work here to cue video, play video, etc.
-                youTubePlayer.cueVideo(videoId);
+                // loads and plays the video
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+                movie.getVideoID(youTubePlayer::loadVideo);
             }
 
             @Override
