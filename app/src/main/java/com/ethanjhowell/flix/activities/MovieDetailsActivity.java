@@ -10,6 +10,9 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.ethanjhowell.flix.R;
 import com.ethanjhowell.flix.databinding.ActivityMovieDetailsBinding;
 import com.ethanjhowell.flix.models.Movie;
 
@@ -39,10 +42,15 @@ public class MovieDetailsActivity extends AppCompatActivity {
         tvOverview = binding.tvOverview;
         rbVoteAverage = binding.rbVoteAverage;
 
-        // TODO -- display image instead and set the onclick listener to that
-        tvTitle.setOnClickListener((View view) -> {
+        binding.ivPoster.setOnClickListener((View view) -> {
             startActivity(new Intent(this, MovieTrailerActivity.class));
         });
+
+        Glide.with(this)
+                .load(movie.getBackdropPath())
+                .placeholder(R.drawable.flicks_backdrop_placeholder)
+                .transform(new RoundedCorners(10))
+                .into(binding.ivPoster);
 
         tvTitle.setText(movie.getTitle());
         tvOverview.setText(movie.getOverview());
