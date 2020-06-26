@@ -33,22 +33,23 @@ public class MovieTrailerActivity extends YouTubeBaseActivity {
         // resolve the player view from the layout
         YouTubePlayerView playerView = binding.player;
 
-        // initialize with API key stored in secrets.xml
-        playerView.initialize(getString(R.string.youtube_api_key), new YouTubePlayer.OnInitializedListener() {
-            @Override
-            public void onInitializationSuccess(YouTubePlayer.Provider provider,
-                                                YouTubePlayer youTubePlayer, boolean b) {
-                // loads and plays the video
-                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
-                movie.getVideoID(youTubePlayer::loadVideo);
-            }
+        movie.getVideoID(this, (String videoID) -> {
+            playerView.initialize(getString(R.string.youtube_api_key), new YouTubePlayer.OnInitializedListener() {
+                @Override
+                public void onInitializationSuccess(YouTubePlayer.Provider provider,
+                                                    YouTubePlayer youTubePlayer, boolean b) {
+                    // loads and plays the video
+                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+                    youTubePlayer.loadVideo(videoID);
+                }
 
-            @Override
-            public void onInitializationFailure(YouTubePlayer.Provider provider,
-                                                YouTubeInitializationResult youTubeInitializationResult) {
-                // log the error
-                Log.e("MovieTrailerActivity", "Error initializing YouTube player");
-            }
+                @Override
+                public void onInitializationFailure(YouTubePlayer.Provider provider,
+                                                    YouTubeInitializationResult youTubeInitializationResult) {
+                    // log the error
+                    Log.e("MovieTrailerActivity", "Error initializing YouTube player");
+                }
+            });
         });
     }
 }
